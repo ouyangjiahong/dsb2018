@@ -35,12 +35,17 @@ def prob_to_rles(x, cutoff=0.5, min_object_size=5.0):
     for i in range(1, lab_img.max() + 1):
         yield rle_encoding(lab_img == i)
 
+def prob_to_rles_2(lab_img):
+    lab_img = lab_img.astype(np.int32)
+    for i in range(1, lab_img.max() + 1):
+        yield rle_encoding(lab_img == i)
+
 if __name__=="__main__":
     IMG_HEIGHT = IMG_WIDTH= 256
     IMG_CHANNELS = 1
 
-    csv_save_name = 'data/multi_unet_submission.csv'
-    pred_path = 'data/prediction_data_final.npz'
+    csv_save_name = 'data/multi_unet_submission_with_post.csv'
+    pred_path = 'data/prediction_data_final_with_post.npz'
     test_path = 'data/stage1_test/'
 
     # load prediction
@@ -68,7 +73,7 @@ if __name__=="__main__":
     new_test_ids = []
     rles = []
     for n, id_ in tqdm(enumerate(test_ids)):
-        rle = list(prob_to_rles(preds_test_upsampled[n]))
+        rle = list(prob_to_rles_2(preds_test_upsampled[n]))
         rles.extend(rle)
         new_test_ids.extend([id_] * len(rle))
 
