@@ -39,14 +39,14 @@ if __name__=="__main__":
     IMG_HEIGHT = IMG_WIDTH= 256
     IMG_CHANNELS = 1
 
-    csv_save_name = 'data/unet_submission.csv'
+    csv_save_name = 'data/multi_unet_submission.csv'
     pred_path = 'data/prediction_data_final.npz'
     test_path = 'data/stage1_test/'
 
     # load prediction
     print('Loading prediction')
     file = np.load(pred_path)
-    prediction = file['result']
+    prediction = file['result'].astype(np.uint8)
 
     test_ids = next(os.walk(test_path))[1]
     # Create list of upsampled test masks
