@@ -6,6 +6,8 @@ def rgb2gray(img):
     gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
     h, w = gray.shape[0], gray.shape[1]
     gray = np.reshape(gray, (h, w, 1))
+    # if np.mean(gray) > 100:
+    # 	gray = 255 - gray
     return gray
 
 def rgb2gray_all(imgs):
@@ -17,11 +19,11 @@ def rgb2gray_all(imgs):
 	return imgs_gray
 
 
-def plots(imgs, figsize=(12,6), rows=1, title=None, titles=None):
+def plots(imgs, figsize=(12,6), rows=1, title=None, titles=None, cmap='gray'):
     f = plt.figure(figsize=figsize)
     if title is not None: plt.title(title)
     for i in range(len(imgs)):
         sp = f.add_subplot(rows, len(imgs)//rows, i+1)
         sp.axis('Off')
         if titles is not None: sp.set_title(titles[i], fontsize=8)
-        plt.imshow(np.squeeze(imgs[i]), cmap='gray')
+        plt.imshow(np.squeeze(imgs[i]), cmap=cmap)
